@@ -1,5 +1,6 @@
 import express from 'express'
 import path from 'path'
+// shel
 import axios from 'axios'
 
 import cors from 'cors'
@@ -48,7 +49,7 @@ server.use((req, res, next) => {
    res.set('Access-Control-Expose-Headers', 'X-SKILLCRUCIAL-USER');
    next();
 })
-
+// start shel
 // const { readFile, writeFile, stat, unlink } = require("fs").promises;
 const { readFile, writeFile, unlink } = require("fs").promises;
 
@@ -133,7 +134,12 @@ server.post('/api/v1/users', async (req, res) => {
       .then(text => {
         if(text) {
           const userses = JSON.parse(text)
-          const newId = userses.length + 1
+          // const newId = userses.length + 1
+          const newId = userses[userses.length - 1].id *1  + 1
+
+          console.log(" ==============   newId   ==============")
+          console.log(newId)
+
           const us = {id: newId}
           Object.assign(us, req.body);
           userses.push(us)
@@ -148,7 +154,9 @@ server.post('/api/v1/users', async (req, res) => {
           .then(text => {
             if(text) {
               const userses2 = JSON.parse(text)
-              const newId2 = userses2.length + 1
+              // const newId2 = userses2.length + 1
+              const newId2 = userses2[userses2.length - 1].id *1  + 1
+
               const us1 = {id: newId2}
               Object.assign(us1, req.body);
               userses2.push(us1)
@@ -194,7 +202,7 @@ server.patch('/api/v1/users/:userId', async (req, res) => {
        } 
      })
 })
-
+// end shel
 server.use('/api/', (req, res) => {
   res.status(404)
   res.end()
